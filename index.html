@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>مريومتي</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Tajawal:wght@300;400;500;700;900&display=swap');
+
+  :root {
+    --bg-darkest: #061a20;
+    --bg-dark: #0a323f;
+    --bg-mid: #0d4a5c;
+    --accent: #1f8fb0;
+    --accent-light: #7fd8ea;
+    --accent-lighter: #bdeef5;
+    --text-color: #eaf7f8;
+    --muted: #7fa8ad;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Tajawal', sans-serif;
+    background: var(--bg-darkest);
+    color: var(--text-color);
+    overflow-x: hidden;
+  }
+
+  /* ---------- COVER / HEART ---------- */
+  #cover {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    background: radial-gradient(ellipse at center, var(--bg-mid) 0%, var(--bg-darkest) 75%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transition: opacity 0.9s ease, visibility 0.9s ease;
+  }
+
+  #cover.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .heart-btn {
+    cursor: pointer;
+    animation: pulse 2.2s ease-in-out infinite;
+    margin: 20px 0 26px;
+    filter: drop-shadow(0 0 22px rgba(31,143,176,0.65));
+  }
+
+  .heart-btn svg {
+    width: 110px;
+    height: 110px;
+    display: block;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+  }
+
+  .cover-title {
+    font-family: 'Aref Ruqaa', serif;
+    font-size: 2.6em;
+    color: var(--accent-lighter);
+    margin-top: 6px;
+  }
+
+  .cover-hint {
+    margin-top: 22px;
+    font-size: 0.95em;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+
+  /* ---------- MAIN CONTENT ---------- */
+  #main {
+    opacity: 0;
+    transition: opacity 1s ease;
+  }
+  #main.show { opacity: 1; }
+
+  section {
+    padding: 70px 20px;
+    max-width: 780px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+  }
+
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(ellipse at top, var(--bg-mid) 0%, var(--bg-darkest) 60%);
+  }
+
+  .hero .small-label {
+    letter-spacing: 4px;
+    color: var(--accent-light);
+    font-size: 0.9em;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+  }
+
+  .hero h1 {
+    font-family: 'Aref Ruqaa', serif;
+    font-size: 2.9em;
+    line-height: 1.5;
+    background: linear-gradient(90deg, var(--accent-lighter), var(--accent), var(--accent-lighter));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 20px;
+  }
+
+  .hero .together-since {
+    margin-top: 10px;
+    font-size: 1.05em;
+    color: var(--muted);
+  }
+
+  .counter {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    margin-top: 35px;
+    flex-wrap: wrap;
+  }
+
+  .counter .box {
+    background: rgba(31,143,176,0.08);
+    border: 1px solid rgba(31,143,176,0.3);
+    border-radius: 16px;
+    padding: 18px 20px;
+    min-width: 78px;
+  }
+
+  .counter .box .num {
+    font-size: 1.8em;
+    font-weight: 700;
+    color: var(--accent-lighter);
+    display: block;
+  }
+
+  .counter .box .lbl {
+    font-size: 0.8em;
+    color: var(--muted);
+    margin-top: 4px;
+    display: block;
+  }
+
+  .section-title {
+    font-family: 'Aref Ruqaa', serif;
+    font-size: 2.1em;
+    color: var(--accent-lighter);
+    margin-bottom: 45px;
+  }
+
+  /* ---------- TIMELINE ---------- */
+  .timeline {
+    position: relative;
+    padding-right: 30px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    right: 9px;
+    top: 6px;
+    bottom: 6px;
+    width: 2px;
+    background: linear-gradient(180deg, var(--accent), transparent);
+  }
+
+  .t-item {
+    position: relative;
+    text-align: right;
+    margin-bottom: 46px;
+    padding-right: 26px;
+  }
+
+  .t-item::before {
+    content: '';
+    position: absolute;
+    right: -2px;
+    top: 4px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 3px solid var(--accent-lighter);
+    box-shadow: 0 0 12px rgba(31,143,176,0.7);
+  }
+
+  .t-date {
+    color: var(--accent-light);
+    font-size: 1.05em;
+    font-weight: 700;
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  .t-title {
+    font-family: 'Aref Ruqaa', serif;
+    font-size: 1.6em;
+    color: var(--text-color);
+    margin-bottom: 10px;
+  }
+
+  .t-text {
+    color: var(--muted);
+    font-size: 1.05em;
+    line-height: 1.9;
+  }
+
+  /* ---------- STORY GALLERY (slide-in) ---------- */
+  .story-list {
+    display: flex;
+    flex-direction: column;
+    gap: 70px;
+  }
+
+  .story-item {
+    opacity: 0;
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+
+  .story-item.side-left {
+    transform: translateX(-70px);
+  }
+
+  .story-item.side-right {
+    transform: translateX(70px);
+  }
+
+  .story-item.revealed {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .story-item img {
+    width: 100%;
+    max-height: 460px;
+    object-fit: cover;
+    border-radius: 18px;
+    display: block;
+    box-shadow: 0 20px 45px rgba(0,0,0,0.45);
+    border: 1px solid rgba(127,216,234,0.15);
+    cursor: pointer;
+  }
+
+  .story-caption {
+    margin-top: 16px;
+    font-family: 'Aref Ruqaa', serif;
+    font-size: 1.5em;
+    color: var(--accent-lighter);
+    line-height: 1.6;
+    opacity: 0;
+    transition: opacity 0.9s ease 0.15s, transform 0.9s ease 0.15s;
+  }
+
+  .story-item.side-left .story-caption {
+    transform: translateX(-40px);
+  }
+
+  .story-item.side-right .story-caption {
+    transform: translateX(40px);
+  }
+
+  .story-item.revealed .story-caption {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* Lightbox */
+  #lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(3,15,18,0.94);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+  }
+  #lightbox.open { display: flex; }
+  #lightbox img {
+    max-width: 92vw;
+    max-height: 88vh;
+    border-radius: 10px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  }
+
+  /* ---------- VIDEOS ---------- */
+  .video-wrap {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .video-wrap video {
+    width: 260px;
+    max-width: 100%;
+    border-radius: 18px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+    border: 1px solid rgba(31,143,176,0.35);
+  }
+
+  /* ---------- CLOSING ---------- */
+  .closing {
+    padding-bottom: 100px;
+  }
+
+  .closing h2 {
+    font-family: 'Aref Ruqaa', serif;
+    font-size: 2.1em;
+    color: var(--accent-lighter);
+    line-height: 1.7;
+    margin-bottom: 18px;
+  }
+
+  .closing p {
+    color: var(--muted);
+    font-size: 1.1em;
+    line-height: 1.9;
+  }
+
+  .footer-hearts {
+    margin-top: 30px;
+    font-size: 1.6em;
+    color: var(--accent);
+    letter-spacing: 12px;
+  }
+
+  .divider-line {
+    width: 60px;
+    height: 2px;
+    background: var(--accent);
+    margin: 0 auto 30px;
+    opacity: 0.6;
+  }
+</style>
+</head>
+<body>
+
+<!-- Autoplay audio: add your own legally-owned song file below (base64 or hosted URL). -->
+<audio id="bgAudio" loop preload="auto">
+  <source src="audio/audio1.mp3" type="audio/mpeg">
+</audio>
+
+<!-- COVER -->
+<div id="cover">
+  <div class="heart-btn" id="sealBtn">
+    <svg viewBox="0 0 32 29" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="heartGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#7fd8ea"/>
+          <stop offset="100%" stop-color="#1f8fb0"/>
+        </linearGradient>
+      </defs>
+      <path d="M16 28.5 C16 28.5 1 19 1 9.5 C1 3.5 5.5 0.5 10 0.5 C13 0.5 15 2 16 4.5 C17 2 19 0.5 22 0.5 C26.5 0.5 31 3.5 31 9.5 C31 19 16 28.5 16 28.5 Z" fill="url(#heartGrad)"/>
+    </svg>
+  </div>
+  <div class="cover-title">مريومتي</div>
+  <div class="cover-hint">اضغط على القلب عشان تشوف</div>
+</div>
+
+<!-- MAIN -->
+<div id="main">
+
+  <section class="hero">
+    <div class="small-label">Our Story</div>
+    <h1>كل حاجة جميلة<br>وانتي أجمل منها</h1>
+    <div class="together-since">مع بعض من 20 يناير 2025</div>
+    <div class="counter" id="counter">
+      <div class="box"><span class="num" id="cDays">0</span><span class="lbl">يوم</span></div>
+      <div class="box"><span class="num" id="cHours">0</span><span class="lbl">ساعة</span></div>
+      <div class="box"><span class="num" id="cMins">0</span><span class="lbl">دقيقة</span></div>
+      <div class="box"><span class="num" id="cSecs">0</span><span class="lbl">ثانية</span></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-title">حكايتنا</div>
+    <div class="timeline">
+      <div class="t-item">
+        <span class="t-date">20 يناير 2025 — 4:12 مساءً</span>
+        <div class="t-title">أول مكالمة</div>
+        <p class="t-text">بداية حاجة مكنتش أتخيل إنها هتبقى بالجمال ده. من أول كلمة حسيت إن في حاجة مختلفة.</p>
+      </div>
+      <div class="t-item">
+        <span class="t-date">11 أغسطس 2025 — 1:30 فجراً</span>
+        <div class="t-title">يوم قولتلك بحبك</div>
+        <p class="t-text">في نص الليل الهادي، طلعت الكلمة من قلبي زي ما هي، مكانتش قرار، كانت إحساس متراكم.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-title">لحظاتنا</div>
+    <div class="story-list" id="storyList">
+
+    <div class="story-item side-left">
+      <img src="images/image1.jpg" alt="ضحكة الليل">
+      <p class="story-caption">ضحكتك في الليل ده من أحلى حاجات شفتها</p>
+    </div>
+
+    <div class="story-item side-right">
+      <img src="images/image2.jpg" alt="لحظة حلوة">
+      <p class="story-caption">لحظة من اللحظات اللي بتفضل في القلب</p>
+    </div>
+
+    <div class="story-item side-left">
+      <img src="images/image3.jpg" alt="مساء دافئ">
+      <p class="story-caption">مساء دافئ حسيت فيه إني في مكاني الصح</p>
+    </div>
+
+    <div class="story-item side-right">
+      <img src="images/image4.jpg" alt="ليلة نجوم">
+      <p class="story-caption">ليلة نجوم كانت هي وانتي بس اللي فاكرها</p>
+    </div>
+
+    <div class="story-item side-left">
+      <img src="images/image5.jpg" alt="رحلة المساء">
+      <p class="story-caption">رحلة مسائية بسيطة بس فضلت في بالي كتير</p>
+    </div>
+
+    <div class="story-item side-right">
+      <img src="images/image6.jpg" alt="صباح مشمس">
+      <p class="story-caption">صباح مشمس وانتي جنبي يبقى يوم تمام</p>
+    </div>
+
+    <div class="story-item side-left">
+      <img src="images/image7.jpg" alt="ليلة سينما">
+      <p class="story-caption">ليلة سينما بسيطة عملت فرق كبير</p>
+    </div>
+
+    <div class="story-item side-right">
+      <img src="images/image8.jpg" alt="متعة السينما">
+      <p class="story-caption">متعة السينما مع حد بيفهمك من غير ما تتكلمي</p>
+    </div>
+
+    <div class="story-item side-left">
+      <img src="images/image9.jpg" alt="مشوار الليل">
+      <p class="story-caption">مشوار في الليل وكلام كتير وضحك أكتر</p>
+    </div>
+
+    <div class="story-item side-right">
+      <img src="images/image10.jpg" alt="بوكورن وضحكة">
+      <p class="story-caption">بوكورن وضحكة وانتي أحلى حاجة في الصورة</p>
+    </div>
+
+    <div class="story-item side-left">
+      <img src="images/image11.jpg" alt="غروب حلو">
+      <p class="story-caption">غروب حلو زي كل لحظة قضيتها معاكي</p>
+    </div>
+
+    <div class="story-item side-right">
+      <img src="images/image12.jpg" alt="جلسة هادية">
+      <p class="story-caption">جلسة هادية كانت كل اللي محتاجه وقتها</p>
+    </div>
+
+    <div class="story-item side-left">
+      <img src="images/image13.jpg" alt="شمس وذكريات">
+      <p class="story-caption">شمس ودفا وذكريات هتفضل معايا للأبد</p>
+    </div>
+
+    <div class="story-item side-right">
+      <img src="images/image14.jpg" alt="وسط الزحمة">
+      <p class="story-caption">وسط كل الزحمة كنتي انتي اللي بشوفها</p>
+    </div>
+
+    <div class="story-item side-left">
+      <img src="images/image15.jpg" alt="سهرة العربية">
+      <p class="story-caption">سهرة في العربية وأغاني وضحك من القلب</p>
+    </div>
+
+    </div>
+  </section>
+
+  <section>
+    <div class="section-title">فيديوهاتنا</div>
+    <div class="video-wrap">
+      <video controls playsinline preload="metadata">
+        <source src="videos/video1.mp4" type="video/mp4">
+      </video>
+      <video controls playsinline preload="metadata">
+        <source src="videos/video2.mp4" type="video/mp4">
+      </video>
+    </div>
+  </section>
+
+  <section class="closing">
+    <div class="divider-line"></div>
+    <h2>مهما الصور والفيديوهات كترت<br>حبي ليكي أكبر من إنه يتصور</h2>
+    <p>كل يوم بعديها بحس إني بحبك أكتر من اليوم اللي قبله.</p>
+    <div class="footer-hearts">♡ ♡ ♡</div>
+  </section>
+
+</div>
+
+<!-- Lightbox -->
+<div id="lightbox">
+  <img id="lightboxImg" src="" alt="">
+</div>
+
+<script>
+  // Cover open + attempt audio autoplay (works because it's inside a user click/tap handler)
+  document.getElementById('sealBtn').addEventListener('click', function() {
+    document.getElementById('cover').classList.add('hidden');
+    document.getElementById('main').classList.add('show');
+    var audio = document.getElementById('bgAudio');
+    if (audio) {
+      audio.play().catch(function(err) { console.log('Audio play blocked or no source set:', err); });
+    }
+  });
+
+  // Lightbox for story images
+  document.querySelectorAll('.story-item img').forEach(function(img) {
+    img.addEventListener('click', function() {
+      document.getElementById('lightboxImg').src = img.src;
+      document.getElementById('lightbox').classList.add('open');
+    });
+  });
+  document.getElementById('lightbox').addEventListener('click', function() {
+    this.classList.remove('open');
+  });
+
+  // Reveal-on-scroll for story items (slide in from side)
+  const revealObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('revealed');
+      }
+    });
+  }, { threshold: 0.25 });
+  document.querySelectorAll('.story-item').forEach(function(item) {
+    revealObserver.observe(item);
+  });
+
+  // Live counter since first call: Jan 20 2025, 16:12 (local time as entered)
+  const startDate = new Date(2025, 0, 20, 16, 12, 0);
+  function updateCounter() {
+    const now = new Date();
+    let diff = Math.floor((now - startDate) / 1000);
+    if (diff < 0) diff = 0;
+    const days = Math.floor(diff / 86400);
+    const hours = Math.floor((diff % 86400) / 3600);
+    const mins = Math.floor((diff % 3600) / 60);
+    const secs = diff % 60;
+    document.getElementById('cDays').textContent = days;
+    document.getElementById('cHours').textContent = hours;
+    document.getElementById('cMins').textContent = mins;
+    document.getElementById('cSecs').textContent = secs;
+  }
+  updateCounter();
+  setInterval(updateCounter, 1000);
+</script>
+
+</body>
+</html>
