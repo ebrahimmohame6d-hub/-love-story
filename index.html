@@ -89,7 +89,7 @@
 
   section {
     padding: 70px 20px;
-    max-width: 780px;
+    max-width: 820px;
     margin: 0 auto;
     text-align: center;
     position: relative;
@@ -166,10 +166,11 @@
     margin-bottom: 45px;
   }
 
-  /* ---------- TIMELINE (مع أنيميشن الدخول من الجانب) ---------- */
+  /* ---------- TIMELINE ---------- */
   .timeline {
     position: relative;
     padding-right: 30px;
+    text-align: right;
   }
 
   .timeline::before {
@@ -184,12 +185,11 @@
 
   .t-item {
     position: relative;
-    text-align: right;
     margin-bottom: 46px;
     padding-right: 26px;
     opacity: 0;
-    transform: translateX(60px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
+    transform: translateX(80px);
+    transition: opacity 0.9s cubic-bezier(0.25, 1, 0.5, 1), transform 0.9s cubic-bezier(0.25, 1, 0.5, 1);
   }
 
   .t-item.revealed {
@@ -299,7 +299,7 @@
     box-shadow: 0 20px 60px rgba(0,0,0,0.6);
   }
 
-  /* ---------- VIDEOS ---------- */
+  /* ---------- VIDEOS (عرض 4 فيديوهات بتنسيق مرتب) ---------- */
   .video-wrap {
     display: flex;
     gap: 20px;
@@ -308,8 +308,8 @@
   }
 
   .video-wrap video {
-    width: 280px;
-    max-width: 100%;
+    width: calc(50% - 15px);
+    min-width: 260px;
     border-radius: 18px;
     box-shadow: 0 15px 40px rgba(0,0,0,0.4);
     border: 1px solid rgba(31,143,176,0.35);
@@ -471,11 +471,17 @@
   <section>
     <div class="section-title">فيديوهاتنا</div>
     <div class="video-wrap">
-      <video controls playsinline preload="auto">
+      <video controls playsinline preload="metadata">
         <source src="video1.mp4" type="video/mp4">
       </video>
-      <video controls playsinline preload="auto">
+      <video controls playsinline preload="metadata">
         <source src="video2.mp4" type="video/mp4">
+      </video>
+      <video controls playsinline preload="metadata">
+        <source src="video3.mp4" type="video/mp4">
+      </video>
+      <video controls playsinline preload="metadata">
+        <source src="video4.mp4" type="video/mp4">
       </video>
     </div>
   </section>
@@ -514,14 +520,14 @@
     this.classList.remove('open');
   });
 
-  // تشغيل حركة الدخول لعناصر التايم لاين والصور عند النزول بالصفحة
+  // كود التمرير والظهور للتايم لاين والصور
   const revealObserver = new IntersectionObserver(function(entries) {
     entries.forEach(function(entry) {
       if (entry.isIntersecting) {
         entry.target.classList.add('revealed');
       }
     });
-  }, { threshold: 0.15 });
+  }, { threshold: 0.1 });
 
   document.querySelectorAll('.story-item, .t-item').forEach(function(item) {
     revealObserver.observe(item);
