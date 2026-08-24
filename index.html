@@ -223,7 +223,7 @@
     line-height: 1.9;
   }
 
-  /* ---------- STORY GALLERY (slide-in) ---------- */
+  /* ---------- STORY GALLERY ---------- */
   .story-list {
     display: flex;
     flex-direction: column;
@@ -235,13 +235,8 @@
     transition: opacity 0.9s ease, transform 0.9s ease;
   }
 
-  .story-item.side-left {
-    transform: translateX(-70px);
-  }
-
-  .story-item.side-right {
-    transform: translateX(70px);
-  }
+  .story-item.side-left { transform: translateX(-70px); }
+  .story-item.side-right { transform: translateX(70px); }
 
   .story-item.revealed {
     opacity: 1;
@@ -269,13 +264,8 @@
     transition: opacity 0.9s ease 0.15s, transform 0.9s ease 0.15s;
   }
 
-  .story-item.side-left .story-caption {
-    transform: translateX(-40px);
-  }
-
-  .story-item.side-right .story-caption {
-    transform: translateX(40px);
-  }
+  .story-item.side-left .story-caption { transform: translateX(-40px); }
+  .story-item.side-right .story-caption { transform: translateX(40px); }
 
   .story-item.revealed .story-caption {
     opacity: 1;
@@ -310,18 +300,16 @@
   }
 
   .video-wrap video {
-    width: 260px;
+    width: 280px;
     max-width: 100%;
     border-radius: 18px;
     box-shadow: 0 15px 40px rgba(0,0,0,0.4);
     border: 1px solid rgba(31,143,176,0.35);
+    background: #000;
   }
 
   /* ---------- CLOSING ---------- */
-  .closing {
-    padding-bottom: 100px;
-  }
-
+  .closing { padding-bottom: 100px; }
   .closing h2 {
     font-family: 'Aref Ruqaa', serif;
     font-size: 2.1em;
@@ -354,9 +342,9 @@
 </head>
 <body>
 
-<!-- Autoplay audio: add your own legally-owned song file below (base64 or hosted URL). -->
+<!-- الصوت بجانب الملف -->
 <audio id="bgAudio" loop preload="auto">
-  <source src="audio/audio1.mp3" type="audio/mpeg">
+  <source src="audio1.mp3" type="audio/mpeg">
 </audio>
 
 <!-- COVER -->
@@ -492,11 +480,11 @@
   <section>
     <div class="section-title">فيديوهاتنا</div>
     <div class="video-wrap">
-      <video controls playsinline preload="metadata">
-        <source src="videos/video1.mp4" type="video/mp4">
+      <video controls playsinline preload="auto">
+        <source src="video1.mp4" type="video/mp4">
       </video>
-      <video controls playsinline preload="metadata">
-        <source src="videos/video2.mp4" type="video/mp4">
+      <video controls playsinline preload="auto">
+        <source src="video2.mp4" type="video/mp4">
       </video>
     </div>
   </section>
@@ -516,17 +504,15 @@
 </div>
 
 <script>
-  // Cover open + attempt audio autoplay (works because it's inside a user click/tap handler)
   document.getElementById('sealBtn').addEventListener('click', function() {
     document.getElementById('cover').classList.add('hidden');
     document.getElementById('main').classList.add('show');
     var audio = document.getElementById('bgAudio');
     if (audio) {
-      audio.play().catch(function(err) { console.log('Audio play blocked or no source set:', err); });
+      audio.play().catch(function(err) { console.log('Audio error:', err); });
     }
   });
 
-  // Lightbox for story images
   document.querySelectorAll('.story-item img').forEach(function(img) {
     img.addEventListener('click', function() {
       document.getElementById('lightboxImg').src = img.src;
@@ -537,19 +523,18 @@
     this.classList.remove('open');
   });
 
-  // Reveal-on-scroll for story items (slide in from side)
   const revealObserver = new IntersectionObserver(function(entries) {
     entries.forEach(function(entry) {
       if (entry.isIntersecting) {
         entry.target.classList.add('revealed');
       }
     });
-  }, { threshold: 0.25 });
+  }, { threshold: 0.15 });
+
   document.querySelectorAll('.story-item').forEach(function(item) {
     revealObserver.observe(item);
   });
 
-  // Live counter since first call: Jan 20 2025, 16:12 (local time as entered)
   const startDate = new Date(2025, 0, 20, 16, 12, 0);
   function updateCounter() {
     const now = new Date();
