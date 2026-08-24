@@ -166,7 +166,7 @@
     margin-bottom: 45px;
   }
 
-  /* ---------- TIMELINE ---------- */
+  /* ---------- TIMELINE (مع أنيميشن الدخول من الجانب) ---------- */
   .timeline {
     position: relative;
     padding-right: 30px;
@@ -187,6 +187,14 @@
     text-align: right;
     margin-bottom: 46px;
     padding-right: 26px;
+    opacity: 0;
+    transform: translateX(60px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .t-item.revealed {
+    opacity: 1;
+    transform: translateX(0);
   }
 
   .t-item::before {
@@ -342,7 +350,6 @@
 </head>
 <body>
 
-<!-- الصوت بجانب الملف -->
 <audio id="bgAudio" loop preload="auto">
   <source src="audio1.mp3" type="audio/mpeg">
 </audio>
@@ -398,82 +405,66 @@
   <section>
     <div class="section-title">لحظاتنا</div>
     <div class="story-list" id="storyList">
-
-    <div class="story-item side-left">
-      <img src="image1.jpg" alt="ضحكة الليل">
-      <p class="story-caption">ضحكتك في الليل ده من أحلى حاجات شفتها</p>
-    </div>
-
-    <div class="story-item side-right">
-      <img src="image2.jpg" alt="لحظة حلوة">
-      <p class="story-caption">لحظة من اللحظات اللي بتفضل في القلب</p>
-    </div>
-
-    <div class="story-item side-left">
-      <img src="image3.jpg" alt="مساء دافئ">
-      <p class="story-caption">مساء دافئ حسيت فيه إني في مكاني الصح</p>
-    </div>
-
-    <div class="story-item side-right">
-      <img src="image4.jpg" alt="ليلة نجوم">
-      <p class="story-caption">ليلة نجوم كانت هي وانتي بس اللي فاكرها</p>
-    </div>
-
-    <div class="story-item side-left">
-      <img src="image5.jpg" alt="رحلة المساء">
-      <p class="story-caption">رحلة مسائية بسيطة بس فضلت في بالي كتير</p>
-    </div>
-
-    <div class="story-item side-right">
-      <img src="image6.jpg" alt="صباح مشمس">
-      <p class="story-caption">صباح مشمس وانتي جنبي يبقى يوم تمام</p>
-    </div>
-
-    <div class="story-item side-left">
-      <img src="image7.jpg" alt="ليلة سينما">
-      <p class="story-caption">ليلة سينما بسيطة عملت فرق كبير</p>
-    </div>
-
-    <div class="story-item side-right">
-      <img src="image8.jpg" alt="متعة السينما">
-      <p class="story-caption">متعة السينما مع حد بيفهمك من غير ما تتكلمي</p>
-    </div>
-
-    <div class="story-item side-left">
-      <img src="image9.jpg" alt="مشوار الليل">
-      <p class="story-caption">مشوار في الليل وكلام كتير وضحك أكتر</p>
-    </div>
-
-    <div class="story-item side-right">
-      <img src="image10.jpg" alt="بوكورن وضحكة">
-      <p class="story-caption">بوكورن وضحكة وانتي أحلى حاجة في الصورة</p>
-    </div>
-
-    <div class="story-item side-left">
-      <img src="image11.jpg" alt="غروب حلو">
-      <p class="story-caption">غروب حلو زي كل لحظة قضيتها معاكي</p>
-    </div>
-
-    <div class="story-item side-right">
-      <img src="image12.jpg" alt="جلسة هادية">
-      <p class="story-caption">جلسة هادية كانت كل اللي محتاجه وقتها</p>
-    </div>
-
-    <div class="story-item side-left">
-      <img src="image13.jpg" alt="شمس وذكريات">
-      <p class="story-caption">شمس ودفا وذكريات هتفضل معايا للأبد</p>
-    </div>
-
-    <div class="story-item side-right">
-      <img src="image14.jpg" alt="وسط الزحمة">
-      <p class="story-caption">وسط كل الزحمة كنتي انتي اللي بشوفها</p>
-    </div>
-
-    <div class="story-item side-left">
-      <img src="image15.jpg" alt="سهرة العربية">
-      <p class="story-caption">سهرة في العربية وأغاني وضحك من القلب</p>
-    </div>
-
+      <div class="story-item side-left">
+        <img src="image1.jpg" alt="ضحكة الليل">
+        <p class="story-caption">ضحكتك في الليل ده من أحلى حاجات شفتها</p>
+      </div>
+      <div class="story-item side-right">
+        <img src="image2.jpg" alt="لحظة حلوة">
+        <p class="story-caption">لحظة من اللحظات اللي بتفضل في القلب</p>
+      </div>
+      <div class="story-item side-left">
+        <img src="image3.jpg" alt="مساء دافئ">
+        <p class="story-caption">مساء دافئ حسيت فيه إني في مكاني الصح</p>
+      </div>
+      <div class="story-item side-right">
+        <img src="image4.jpg" alt="ليلة نجوم">
+        <p class="story-caption">ليلة نجوم كانت هي وانتي بس اللي فاكرها</p>
+      </div>
+      <div class="story-item side-left">
+        <img src="image5.jpg" alt="رحلة المساء">
+        <p class="story-caption">رحلة مسائية بسيطة بس فضلت في بالي كتير</p>
+      </div>
+      <div class="story-item side-right">
+        <img src="image6.jpg" alt="صباح مشمس">
+        <p class="story-caption">صباح مشمس وانتي جنبي يبقى يوم تمام</p>
+      </div>
+      <div class="story-item side-left">
+        <img src="image7.jpg" alt="ليلة سينما">
+        <p class="story-caption">ليلة سينما بسيطة عملت فرق كبير</p>
+      </div>
+      <div class="story-item side-right">
+        <img src="image8.jpg" alt="متعة السينما">
+        <p class="story-caption">متعة السينما مع حد بيفهمك من غير ما تتكلمي</p>
+      </div>
+      <div class="story-item side-left">
+        <img src="image9.jpg" alt="مشوار الليل">
+        <p class="story-caption">مشوار في الليل وكلام كتير وضحك أكتر</p>
+      </div>
+      <div class="story-item side-right">
+        <img src="image10.jpg" alt="بوكورن وضحكة">
+        <p class="story-caption">بوكورن وضحكة وانتي أحلى حاجة في الصورة</p>
+      </div>
+      <div class="story-item side-left">
+        <img src="image11.jpg" alt="غروب حلو">
+        <p class="story-caption">غروب حلو زي كل لحظة قضيتها معاكي</p>
+      </div>
+      <div class="story-item side-right">
+        <img src="image12.jpg" alt="جلسة هادية">
+        <p class="story-caption">جلسة هادية كانت كل اللي محتاجه وقتها</p>
+      </div>
+      <div class="story-item side-left">
+        <img src="image13.jpg" alt="شمس وذكريات">
+        <p class="story-caption">شمس ودفا وذكريات هتفضل معايا للأبد</p>
+      </div>
+      <div class="story-item side-right">
+        <img src="image14.jpg" alt="وسط الزحمة">
+        <p class="story-caption">وسط كل الزحمة كنتي انتي اللي بشوفها</p>
+      </div>
+      <div class="story-item side-left">
+        <img src="image15.jpg" alt="سهرة العربية">
+        <p class="story-caption">سهرة في العربية وأغاني وضحك من القلب</p>
+      </div>
     </div>
   </section>
 
@@ -523,6 +514,7 @@
     this.classList.remove('open');
   });
 
+  // تشغيل حركة الدخول لعناصر التايم لاين والصور عند النزول بالصفحة
   const revealObserver = new IntersectionObserver(function(entries) {
     entries.forEach(function(entry) {
       if (entry.isIntersecting) {
@@ -531,7 +523,7 @@
     });
   }, { threshold: 0.15 });
 
-  document.querySelectorAll('.story-item').forEach(function(item) {
+  document.querySelectorAll('.story-item, .t-item').forEach(function(item) {
     revealObserver.observe(item);
   });
 
